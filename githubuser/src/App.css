@@ -204,3 +204,9 @@ body {
   font-style: italic;
   margin: 3px 0 10px;
 }
+.block {
+  display: block;
+}
+.none {
+  display: none;
+}
