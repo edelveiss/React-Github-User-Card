@@ -21,6 +21,7 @@ class Card extends React.Component {
   state = {
     modal: false,
     followers: [],
+    fError: "",
   };
   toggle = () => {
     this.getFollowers();
@@ -46,6 +47,10 @@ class Card extends React.Component {
         });
       })
       .catch((error) => {
+        this.setState({
+          fError:
+            "There are too many requests. It has been blocked by CORS policy. Please try again in one hour.",
+        });
         console.log("The data was not returned2 ", error);
       });
   };
@@ -74,11 +79,19 @@ class Card extends React.Component {
         <MyButton onClick={this.toggle}>Followers</MyButton>
         <div className={this.state.modal ? "block" : "none"}>
           <div>
+            {this.state.fError && (
+              <p style={{ color: "red", fontSize: "2rem", marginTop: "2rem" }}>
+                {this.state.fError}
+              </p>
+            )}
             <ul>
               {this.state.followers.map((item, index) => (
-                <div style={{ marginLeft: "1rem" }}>
-                  <li key={index} style={{ fontSize: "1rem" }}>
-                    <a href={item.html_url}>{`${item.login} ${item.name}`}</a>
+                <div style={{ marginLeft: "1rem", marginTop: "0.5rem" }}>
+                  <li key={index} style={{ fontSize: "1.5rem" }}>
+                    <a
+                      href={item.html_url}
+                      target="_blank"
+                    >{`${item.login} ${item.name}`}</a>
                   </li>
                 </div>
               ))}

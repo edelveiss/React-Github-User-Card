@@ -32,10 +32,10 @@ class App extends React.Component {
   state = {
     users: [],
     error: "",
-    searchUser: "edelveiss",
+    searchUser: "",
   };
   componentDidMount() {
-    this.userLoading(this.state.searchUser);
+    this.userLoading("edelveiss");
   }
 
   // updateUser = (person) => {
@@ -82,7 +82,8 @@ class App extends React.Component {
       })
       .catch((err) => {
         this.setState({
-          error: "Looks like we could not find that user. Please try again",
+          error:
+            "Looks like we could not find that user or there are too many requests has been made. Please try again in one hour.",
         });
       });
   };
