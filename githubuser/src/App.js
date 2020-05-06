@@ -31,76 +31,12 @@ const MyButton = styled(Button)({
 class App extends React.Component {
   state = {
     users: [],
-    user: "",
     error: "",
-    searchUser: "",
-    followersUrl: [],
+    searchUser: "edelveiss",
   };
-
   componentDidMount() {
-    axios
-      .get("https://api.github.com/users/edelveiss")
-      .then((response) => {
-        console.log(response.data.followers_url);
-        this.setState({
-          users: [...this.state.users, response.data],
-        });
-
-        axios
-          .get(response.data.followers_url)
-          .then((response) => {
-            console.log(response.data);
-            response.data.forEach((item) => {
-              axios
-                .get("https://api.github.com/users/" + item.login)
-                .then((response) => {
-                  this.setState({
-                    users: [...this.state.users, response.data],
-                  });
-                })
-                .catch((error) => {
-                  console.log("The data was not returned ", error);
-                });
-            });
-          })
-          .catch((error) => {
-            console.log("The data was not returned ", error);
-          });
-      })
-
-      .catch((error) => {
-        console.log("The data was not returned ", error);
-      });
+    this.userLoading(this.state.searchUser);
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.users !== this.state.users) {
-  //     axios
-  //       .get(this.state.followersUrl)
-  //       .then((response) => {
-  //         console.log("followersUrl", response.data);
-  //         response.data.forEach((item) => {
-  //           axios
-  //             .get("https://api.github.com/users/" + item.login)
-  //             .then((response) => {
-  //               console.log(
-  //                 "https://api.github.com/users/ + item.login",
-  //                 response.data
-  //               );
-  //               this.setState({
-  //                 users: [...this.state.users, response.data],
-  //               });
-  //             })
-  //             .catch((error) => {
-  //               console.log("The data was not returned ", error);
-  //             });
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.log("The data was not returned ", error);
-  //       });
-  //   }
-  // }
 
   // updateUser = (person) => {
   //   this.setState({ user: person });
@@ -112,14 +48,9 @@ class App extends React.Component {
     });
   };
 
-  fetchUser = (e) => {
-    e.preventDefault();
-
-    this.setState({
-      users: [],
-    });
+  userLoading = (userString) => {
     axios
-      .get(`https://api.github.com/users/${this.state.searchUser}`)
+      .get(`https://api.github.com/users/${userString}`)
       .then((res) => {
         this.setState({
           users: [...this.state.users, res.data],
@@ -154,6 +85,15 @@ class App extends React.Component {
           error: "Looks like we could not find that user. Please try again",
         });
       });
+  };
+
+  fetchUser = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      users: [],
+    });
+    this.userLoading(this.state.searchUser);
   };
 
   render() {
@@ -197,14 +137,67 @@ class App extends React.Component {
 
 export default App;
 
-// <button
-//           onClick={this.fetchUser}
-//           style={{
-//             width: "10rem",
-//             height: "4rem",
-//             marginLeft: "2rem",
-//             fontSize: "1.5rem",
-//           }}
-//         >
-//           Fetch user
-//         </button>
+// componentDidUpdate(prevProps, prevState) {
+//   if (prevState.users !== this.state.users) {
+//     axios
+//       .get(this.state.followersUrl)
+//       .then((response) => {
+//         console.log("followersUrl", response.data);
+//         response.data.forEach((item) => {
+//           axios
+//             .get("https://api.github.com/users/" + item.login)
+//             .then((response) => {
+//               console.log(
+//                 "https://api.github.com/users/ + item.login",
+//                 response.data
+//               );
+//               this.setState({
+//                 users: [...this.state.users, response.data],
+//               });
+//             })
+//             .catch((error) => {
+//               console.log("The data was not returned ", error);
+//             });
+//         });
+//       })
+//       .catch((error) => {
+//         console.log("The data was not returned ", error);
+//       });
+//   }
+// }
+
+// componentDidMount() {
+//   axios
+//     .get("https://api.github.com/users/edelveiss")
+//     .then((response) => {
+//       console.log(response.data.followers_url);
+//       this.setState({
+//         users: [...this.state.users, response.data],
+//       });
+
+//       axios
+//         .get(response.data.followers_url)
+//         .then((response) => {
+//           console.log(response.data);
+//           response.data.forEach((item) => {
+//             axios
+//               .get("https://api.github.com/users/" + item.login)
+//               .then((response) => {
+//                 this.setState({
+//                   users: [...this.state.users, response.data],
+//                 });
+//               })
+//               .catch((error) => {
+//                 console.log("The data was not returned ", error);
+//               });
+//           });
+//         })
+//         .catch((error) => {
+//           console.log("The data was not returned ", error);
+//         });
+//     })
+
+//     .catch((error) => {
+//       console.log("The data was not returned ", error);
+//     });
+// }
