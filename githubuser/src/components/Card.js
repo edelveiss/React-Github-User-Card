@@ -25,7 +25,7 @@ class Card extends React.Component {
   };
   toggle = () => {
     this.getFollowers();
-    this.setState({ modal: !this.state.modal });
+    this.setState({ modal: !this.state.modal, followers: [] });
   };
 
   getFollowers = () => {
@@ -86,12 +86,23 @@ class Card extends React.Component {
             )}
             <ul>
               {this.state.followers.map((item, index) => (
-                <div style={{ marginLeft: "1rem", marginTop: "0.5rem" }}>
-                  <li key={index} style={{ fontSize: "1.5rem" }}>
+                <div
+                  style={{
+                    marginLeft: "2rem",
+                    marginTop: "0.5rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <li
+                    key={index}
+                    style={{ fontSize: "1.5rem", textAlign: "left" }}
+                  >
                     <a
                       href={item.html_url}
                       target="_blank"
-                    >{`${item.login} ${item.name}`}</a>
+                    >{`${item.login}`}</a>
                   </li>
                 </div>
               ))}
