@@ -57,8 +57,9 @@ class Card extends React.Component {
   //console.log("card", props);
   //const { usermap } = props;
   render() {
-    console.log("this.props.followers_url", this.props.usermap.followers_url);
-    console.log("followers card", this.state.followers);
+    // console.log("this.props.followers_url", this.props.usermap.followers_url);
+    // console.log("followers card", this.state.followers);
+    console.log("this.props.key", this.props.keyIndex);
     return (
       <div className="card">
         <img src={this.props.usermap.avatar_url} />

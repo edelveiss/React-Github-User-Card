@@ -173,6 +173,17 @@ body {
   width: 100%;
 }
 
+.first-user {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 0 1px 6px -2px #000;
+  background-color: #fff;
+  margin-bottom: 30px;
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+}
 .card {
   width: 100%;
   padding: 20px;
