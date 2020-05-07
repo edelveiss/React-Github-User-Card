@@ -112,7 +112,7 @@ class App extends React.Component {
           type="text"
           value={this.state.searchUser}
           onChange={this.handleChanges}
-          placeholder="Enter user name"
+          placeholder="Enter GitHub user name"
         />
         <MyButton onClick={this.fetchUser}>Fetch user</MyButton>
 
