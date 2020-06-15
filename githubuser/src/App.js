@@ -98,8 +98,8 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("user", this.state.user);
-    console.log("followersUrl", this.state.followersUrl);
+    // console.log("user", this.state.user);
+    // console.log("followersUrl", this.state.followersUrl);
     return (
       <div className="App">
         <input
@@ -112,7 +112,7 @@ class App extends React.Component {
           type="text"
           value={this.state.searchUser}
           onChange={this.handleChanges}
-          placeholder="Enter user name"
+          placeholder="Enter GitHub user name"
         />
         <MyButton onClick={this.fetchUser}>Fetch user</MyButton>
 
@@ -122,14 +122,30 @@ class App extends React.Component {
           </p>
         )}
         <div className="container">
-          {this.state.users.map((el, index) => (
-            <Card
-              usermap={el}
-              key={index}
-              updateUser={this.updateUser}
-              user={this.state.user}
-            />
-          ))}
+          {this.state.users.map((el, index) =>
+            index === 0 ? (
+              <div className="first-user">
+                <Card
+                  usermap={el}
+                  key={index}
+                  keyIndex={index}
+                  updateUser={this.updateUser}
+                  user={this.state.user}
+                />
+                <div
+                  style={{ fontSize: "2rem" }}
+                >{`${el.login}'s followers:`}</div>
+              </div>
+            ) : (
+              <Card
+                usermap={el}
+                key={index}
+                keyIndex={index}
+                updateUser={this.updateUser}
+                user={this.state.user}
+              />
+            )
+          )}
         </div>
       </div>
     );
@@ -138,67 +154,41 @@ class App extends React.Component {
 
 export default App;
 
-// componentDidUpdate(prevProps, prevState) {
-//   if (prevState.users !== this.state.users) {
-//     axios
-//       .get(this.state.followersUrl)
-//       .then((response) => {
-//         console.log("followersUrl", response.data);
-//         response.data.forEach((item) => {
-//           axios
-//             .get("https://api.github.com/users/" + item.login)
-//             .then((response) => {
-//               console.log(
-//                 "https://api.github.com/users/ + item.login",
-//                 response.data
-//               );
-//               this.setState({
-//                 users: [...this.state.users, response.data],
-//               });
-//             })
-//             .catch((error) => {
-//               console.log("The data was not returned ", error);
-//             });
-//         });
-//       })
-//       .catch((error) => {
-//         console.log("The data was not returned ", error);
-//       });
-//   }
-// }
+// render() {
+//   // console.log("user", this.state.user);
+//   // console.log("followersUrl", this.state.followersUrl);
+//    return (
+//      <div className="App">
+//        <input
+//          style={{
+//            height: "4.5rem",
+//            width: "40%",
+//            marginTop: "3rem",
+//            fontSize: "2rem",
+//          }}
+//          type="text"
+//          value={this.state.searchUser}
+//          onChange={this.handleChanges}
+//          placeholder="Enter GitHub user name"
+//        />
+//        <MyButton onClick={this.fetchUser}>Fetch user</MyButton>
 
-// componentDidMount() {
-//   axios
-//     .get("https://api.github.com/users/edelveiss")
-//     .then((response) => {
-//       console.log(response.data.followers_url);
-//       this.setState({
-//         users: [...this.state.users, response.data],
-//       });
-
-//       axios
-//         .get(response.data.followers_url)
-//         .then((response) => {
-//           console.log(response.data);
-//           response.data.forEach((item) => {
-//             axios
-//               .get("https://api.github.com/users/" + item.login)
-//               .then((response) => {
-//                 this.setState({
-//                   users: [...this.state.users, response.data],
-//                 });
-//               })
-//               .catch((error) => {
-//                 console.log("The data was not returned ", error);
-//               });
-//           });
-//         })
-//         .catch((error) => {
-//           console.log("The data was not returned ", error);
-//         });
-//     })
-
-//     .catch((error) => {
-//       console.log("The data was not returned ", error);
-//     });
-// }
+//        {this.state.error && (
+//          <p style={{ color: "red", fontSize: "2rem", marginTop: "2rem" }}>
+//            {this.state.error}
+//          </p>
+//        )}
+//        <div className="container">
+//          {this.state.users.map((el, index) => (
+//            <Card
+//              usermap={el}
+//              key={index}
+//              keyIndex={index}
+//              updateUser={this.updateUser}
+//              user={this.state.user}
+//            />
+//          ))}
+//        </div>
+//      </div>
+//    );
+//  }
